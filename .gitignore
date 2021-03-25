@@ -1,0 +1,5 @@
+Makefile
+.vscode/settings.json
+bin/macos/debug/project
+build/make_macos/debug/main.d
+build/make_macos/debug/main.o
