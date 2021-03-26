@@ -1,8 +1,12 @@
 #include <iostream>
+#include "GrapheExposition.h"
 
 int main()
 {
     bool quitter = false;
+    GrapheExposition graphe;
+    
+
 
     while(quitter == false)
     {
@@ -16,11 +20,21 @@ int main()
         switch(choix)
         {
             case 'a':
-                std::cout << "Création graphe." << std::endl << std::endl;
+                graphe.creerGrapheExposition("Individus.txt", "Contacts.txt");
+                std::cout << std::endl << std::endl;
                 break;
 
             case 'b':
-                std::cout << "Affichage graphe." << std::endl << std::endl;
+                if(graphe.getExist())
+                {
+                    graphe.afficherGrapheExposition();
+                }
+                else
+                {
+                    std::cout << "Le graphe n'as pas encore été généré" << std::endl << std::endl;;
+                }
+                
+                
                 break;
 
             case 'c':
