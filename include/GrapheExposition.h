@@ -13,6 +13,8 @@ class GrapheExposition
 
     void creerGrapheExposition(std::string individu, std::string contact);
     void afficherGrapheExposition();
+    bool identifierExposition(std::string x, std::string y);
+    void notifierExposition(std::string individu);
     bool getExist() const;
 
     private:

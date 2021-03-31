@@ -11,9 +11,9 @@ int main()
     while(quitter == false)
     {
         char choix;
-        std::cout << "(a) Créer le graphe d'exposition." << std::endl;
-        std::cout << "(b) Afficher le graphe d'exposition." << std::endl;
-        std::cout << "(c) Aﬀicher notification COVID" << std::endl;
+        std::cout << "(a) Creer le graphe d exposition." << std::endl;
+        std::cout << "(b) Afficher le graphe d exposition." << std::endl;
+        std::cout << "(c) Afficher notification COVID" << std::endl;
         std::cout << "(d) Quitter." << std::endl;
         std::cin >> choix;
         std::cout << std::endl;
@@ -31,22 +31,34 @@ int main()
                 }
                 else
                 {
-                    std::cout << "Le graphe n'as pas encore été généré" << std::endl << std::endl;;
+                    std::cout << "Le graphe n a pas encore été genere" << std::endl << std::endl;;
                 }
                 
                 
                 break;
 
             case 'c':
-                std::cout << "Affichage notification." << std::endl << std::endl;
-                break;
+              
+                if (graphe.getExist())
+                {
+                    std::string personne;
+                    std::cout << "Entrer le nom de la personne que vous souhaiter verifier son exposition a la covid" << std::endl << std::endl;
+                    std::cin >> personne;
+                    graphe.notifierExposition(personne);
+                }
+                else
+                {
+                    std::cout << "Le graphe n as pas encore ete genere" << std::endl << std::endl;;
+                }
 
+                break;
             case 'd':
                 quitter = true;
                 break;
 
             default:
-                std::cout << std::endl;
+                std::cout << "Entre invalide"<<std::endl;
+                break;
 
         }
     }

@@ -61,11 +61,11 @@ if(!grapheExiste_)
         fichier2.close();
     }
     grapheExiste_ = true;
-    std::cout << "Le graphe a été généré";
+    std::cout << "Le graphe a ete genere";
 }
 else
 {
-    std::cout << "Le graphe est déjà généré";
+    std::cout << "Le graphe est deja genere";
 }
 
 }
@@ -94,4 +94,55 @@ void GrapheExposition::afficherGrapheExposition()
         }
     }
     std::cout << std::endl;
+}
+
+bool GrapheExposition::identifierExposition(std::string x, std::string y){
+    int index_x = getIndexParNom(x);
+    int index_y = getIndexParNom(y);
+    if (population_[index_y].getCovid()!=true) {
+        return false;
+    }
+    for (size_t i = 0; i < population_[index_x].getVoisins().size(); i++)
+    {
+        if (population_[index_x].getVoisins()[i].second < 2){
+            if (population_[index_x].getVoisins()[i].first.getNom()==y) {
+                return true;
+
+            }
+            else {
+                if (identifierExposition(population_[index_x].getVoisins()[i].first.getNom(), y)) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+void GrapheExposition::notifierExposition(std::string individu) {
+
+    int index=getIndexParNom(individu);
+    if (index == 0) {
+        std::cout << "Aucunes donnes sur cette personne" << std::endl << std::endl;
+        return;
+    }
+    for (size_t i = 0; i < population_.size(); i++)
+    {  
+
+        if (i==index){
+            if (population_[i].getCovid()) {
+                std::cout << "Vous avez ete expose au cours des 14 derniers jours" << std::endl << std::endl;
+                return;
+            }
+
+        }
+        else {
+            if (identifierExposition(individu, population_[i].getNom())) {
+                std::cout << "Vous avez ete expose au cours des 14 derniers jours" << std::endl << std::endl;
+                return;
+            }
+        }
+
+    }
+    std::cout << "Aucune exposition detecte" << std::endl << std::endl;
+
 }
