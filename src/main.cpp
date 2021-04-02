@@ -5,7 +5,6 @@ int main()
 {
     bool quitter = false;
     GrapheExposition graphe;
-    
 
 
     while(quitter == false)
@@ -15,6 +14,7 @@ int main()
         std::cout << "(b) Afficher le graphe d exposition." << std::endl;
         std::cout << "(c) Afficher notification COVID" << std::endl;
         std::cout << "(d) Quitter." << std::endl;
+        std::cout << "(e) testing." << std::endl;
         std::cin >> choix;
         std::cout << std::endl;
         switch(choix)
@@ -52,10 +52,13 @@ int main()
                 }
 
                 break;
+            case 'e':
+                graphe.testing();
+                break;
             case 'd':
                 quitter = true;
                 break;
-
+          
             default:
                 std::cout << "Entre invalide"<<std::endl;
                 break;

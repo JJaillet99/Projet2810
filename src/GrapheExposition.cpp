@@ -130,19 +130,27 @@ void GrapheExposition::notifierExposition(std::string individu) {
 
         if (i==index){
             if (population_[i].getCovid()) {
-                std::cout << "Vous avez ete expose au cours des 14 derniers jours" << std::endl << std::endl;
+                std::cout << individu << ",Vous avez la covid-19" << std::endl << std::endl;
                 return;
             }
 
         }
         else {
             if (identifierExposition(individu, population_[i].getNom())) {
-                std::cout << "Vous avez ete expose au cours des 14 derniers jours" << std::endl << std::endl;
+                std::cout <<individu << ",Vous avez ete expose au cours des 14 derniers jours" << std::endl << std::endl;
                 return;
             }
         }
 
     }
-    std::cout << "Aucune exposition detecte" << std::endl << std::endl;
+    std::cout << "Aucune exposition detecte" << std::endl << std::endl; // à remettre, juste enlever pour le testing
 
+}
+void GrapheExposition::testing() // donne la liste de tous les gens exposé 
+{
+    for (size_t i = 0; i < population_.size(); i++)
+    {
+        //std::cout << population_[i].getNom() << std::endl << std::endl;
+        notifierExposition(population_[i].getNom());
+    }
 }
