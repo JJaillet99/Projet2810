@@ -52,7 +52,7 @@ if(!grapheExiste_)
             
             float distance = std::stof(distanceString);
 
-            population_[getIndexParNom(nomIndividu)].addVoisin(population_[getIndexParNom(nomVoisin)],distance);
+            population_[getIndexParNom(nomIndividu)].addVoisin(std::make_shared<Individu>(population_[getIndexParNom(nomVoisin)]),distance);
 
             nomIndividuPrecedent = nomIndividu;
             
@@ -86,10 +86,10 @@ void GrapheExposition::afficherGrapheExposition()
 {
     for(Individu individu : population_)
     {
-        for(std::pair<Individu, float> voisDist : individu.getVoisins())
+        for(std::pair<std::shared_ptr<Individu> , float> voisDist : individu.getVoisins())
         {
             std::cout << "(" << individu.getNom() << " ";
-            std::cout << voisDist.first.getNom() << " ";
+            std::cout << voisDist.first->getNom() << " ";
             std::cout << "(" << voisDist.second << "))" << std::endl;
         }
     }
@@ -105,12 +105,12 @@ bool GrapheExposition::identifierExposition(std::string x, std::string y){
     for (size_t i = 0; i < population_[index_x].getVoisins().size(); i++)
     {
         if (population_[index_x].getVoisins()[i].second < 2){
-            if (population_[index_x].getVoisins()[i].first.getNom()==y) {
+            if (population_[index_x].getVoisins()[i].first->getNom()==y) {
                 return true;
 
             }
             else {
-                if (identifierExposition(population_[index_x].getVoisins()[i].first.getNom(), y)) {
+                if (identifierExposition(population_[index_x].getVoisins()[i].first->getNom(), y)) {
                     return true;
                 }
             }
@@ -130,14 +130,14 @@ void GrapheExposition::notifierExposition(std::string individu) {
 
         if (i==index){
             if (population_[i].getCovid()) {
-                std::cout << individu << ",Vous avez la covid-19" << std::endl << std::endl;
+                std::cout << individu << ", vous avez la covid-19" << std::endl << std::endl;
                 return;
             }
 
         }
         else {
             if (identifierExposition(individu, population_[i].getNom())) {
-                std::cout <<individu << ",Vous avez ete expose au cours des 14 derniers jours" << std::endl << std::endl;
+                std::cout << individu << ", vous avez ete expose au cours des 14 derniers jours" << std::endl << std::endl;
                 return;
             }
         }
@@ -145,12 +145,4 @@ void GrapheExposition::notifierExposition(std::string individu) {
     }
     std::cout << "Aucune exposition detecte" << std::endl << std::endl; // � remettre, juste enlever pour le testing
 
-}
-void GrapheExposition::testing() // donne la liste de tous les gens expos� 
-{
-    for (size_t i = 0; i < population_.size(); i++)
-    {
-        //std::cout << population_[i].getNom() << std::endl << std::endl;
-        notifierExposition(population_[i].getNom());
-    }
 }

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 #include "Individu.h"
 
 
@@ -16,7 +17,7 @@ class GrapheExposition
     bool identifierExposition(std::string x, std::string y);
     void notifierExposition(std::string individu);
     bool getExist() const;
-    void testing();
+    
     private:
     size_t getIndexParNom(std::string nom);
     std::vector<Individu> population_;
