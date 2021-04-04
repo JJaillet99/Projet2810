@@ -79,7 +79,7 @@ size_t GrapheExposition::getIndexParNom(std::string nom)
             return i;
         }
     }
-    return 0;
+    return -1;
 }
 
 void GrapheExposition::afficherGrapheExposition()
@@ -121,7 +121,7 @@ bool GrapheExposition::identifierExposition(std::string x, std::string y){
 void GrapheExposition::notifierExposition(std::string individu) {
 
     int index=getIndexParNom(individu);
-    if (index == 0) {
+    if (index == -1) {
         std::cout << "Aucunes donnes sur cette personne" << std::endl << std::endl;
         return;
     }
@@ -143,10 +143,10 @@ void GrapheExposition::notifierExposition(std::string individu) {
         }
 
     }
-    std::cout << "Aucune exposition detecte" << std::endl << std::endl; // à remettre, juste enlever pour le testing
+    std::cout << "Aucune exposition detecte" << std::endl << std::endl; // ï¿½ remettre, juste enlever pour le testing
 
 }
-void GrapheExposition::testing() // donne la liste de tous les gens exposé 
+void GrapheExposition::testing() // donne la liste de tous les gens exposï¿½ 
 {
     for (size_t i = 0; i < population_.size(); i++)
     {
