@@ -20,7 +20,6 @@ class GrapheExposition
     bool identifierExposition(std::string x, std::string y);
     void notifierExposition(std::string individu);
     bool getExist() const;
-    bool tranquille(std::string x, std::string y);
     private:
     size_t getIndexParNom(std::string nom);
     std::vector<Individu> population_;

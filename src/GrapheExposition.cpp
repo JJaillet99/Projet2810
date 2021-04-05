@@ -34,7 +34,6 @@ if(!grapheExiste_)
     std::ifstream fichier2 (contact);
     if (fichier2.is_open())
     {
-        std::string nomIndividuPrecedent = " ";
         std::string nomIndividu;
         std::string nomVoisin;
         std::string distanceString;
@@ -54,12 +53,10 @@ if(!grapheExiste_)
             }
             
             float distance = std::stof(distanceString);
-
-            population_[getIndexParNom(nomIndividu)].addVoisin(std::make_shared<Individu>(population_[getIndexParNom(nomVoisin)]),distance);
-            population_[getIndexParNom(nomVoisin)].addVoisin(std::make_shared<Individu>(population_[getIndexParNom(nomIndividu)]),distance);
-
-            nomIndividuPrecedent = nomIndividu;
-            
+            int indexIndividu = getIndexParNom(nomIndividu);
+            int indexVoisin = getIndexParNom(nomVoisin);
+            population_[indexIndividu].addVoisin(indexVoisin, distance);
+            population_[indexVoisin].addVoisin(indexIndividu, distance);
         }
 
         fichier2.close();
@@ -90,10 +87,10 @@ void GrapheExposition::afficherGrapheExposition()
 {
     for(Individu individu : population_)
     {
-        for(std::pair<std::shared_ptr<Individu> , float> voisDist : individu.getVoisins())
+        for(std::pair<int , float> voisDist : individu.getVoisins())
         {
             std::cout << "(" << individu.getNom() << " ";
-            std::cout << voisDist.first->getNom() << " ";
+            std::cout << population_[voisDist.first].getNom() << " ";
             std::cout << "(" << voisDist.second << "))" << std::endl;
         }
     }
@@ -102,25 +99,27 @@ void GrapheExposition::afficherGrapheExposition()
 
 bool GrapheExposition::identifierExposition(std::string x, std::string y)
 {
-    std::set<std::pair<float, std::shared_ptr<Individu>>> ensemble;
+    std::set<std::pair<float, int>> ensemble;
     std::map<int, float> distance;
+    int indexX;
     for (int i = 0; i<population_.size(); i++)
     {
         distance[population_[i].getIndex()] = 10000;
         if(population_[i].getNom() == x)
         {
             distance[population_[i].getIndex()] = 0;
+            indexX = i;
         }
     }
-    ensemble.insert(std::make_pair(0, std::make_shared<Individu>(population_[getIndexParNom(x)])));
+    ensemble.insert(std::make_pair(0, indexX));
     
     
     while(!ensemble.empty())
     {
-        std::shared_ptr<Individu> individu = ensemble.begin()->second;
-        if(individu->getNom() == y)
+        int individu = ensemble.begin()->second;
+        if(population_[individu].getNom() == y)
         {
-            if(individu->getCovid() == 1)
+            if(population_[individu].getCovid() == 1 && distance[individu] < 2)
             {
                 return true;
             }
@@ -132,18 +131,18 @@ bool GrapheExposition::identifierExposition(std::string x, std::string y)
         ensemble.erase(ensemble.begin());
         
 
-        for(std::pair<std::shared_ptr<Individu>, float> voisin : individu->getVoisins())
+        for(std::pair<int, float> voisin : population_[individu].getVoisins())
         {
             if(voisin.second < 2)
             {
-                if(distance[voisin.first->getIndex()] > distance[individu->getIndex()] + voisin.second)
+                if(distance[voisin.first] > distance[individu] + voisin.second)
                 {
-                    if(distance[voisin.first->getIndex()] != 10000)
+                    if(distance[voisin.first] != 10000)
                     {
-                        ensemble.erase(ensemble.find(std::make_pair(distance[voisin.first->getIndex()], voisin.first)));
+                        ensemble.erase(ensemble.find(std::make_pair(distance[voisin.first], voisin.first)));
                     }
-                    distance[voisin.first->getIndex()] = distance[individu->getIndex()] + voisin.second;
-                    ensemble.insert(std::make_pair(distance[voisin.first->getIndex()], voisin.first));
+                    distance[voisin.first] = distance[individu] + voisin.second;
+                    ensemble.insert(std::make_pair(distance[voisin.first], voisin.first));
                     
                 }
             }

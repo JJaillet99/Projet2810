@@ -15,8 +15,8 @@ class Individu
     int getCovid() const;
     int getIndex() const;
     std::string getNom() const;
-    std::vector<std::pair<std::shared_ptr<Individu>, float>> getVoisins() const;
-    void addVoisin(std::shared_ptr<Individu> voisin, float distance);
+    std::vector<std::pair<int, float>> getVoisins() const;
+    void addVoisin(int index, float distance);
     
     
 
@@ -24,6 +24,6 @@ class Individu
     int index_;
     std::string nom_;
     int covid_;
-    std::vector<std::pair<std::shared_ptr<Individu>, float>> voisins_;
+    std::vector<std::pair<int, float>> voisins_;
 
 };

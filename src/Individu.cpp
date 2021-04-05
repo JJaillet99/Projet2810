@@ -20,14 +20,14 @@
         return nom_;
     }
 
-    void Individu::addVoisin(std::shared_ptr<Individu> voisin, float distance)
+    void Individu::addVoisin(int index, float distance)
     {
-        std::pair<std::shared_ptr<Individu>, float> voisDist = std::make_pair(voisin, distance);
+        std::pair<int, float> voisDist = std::make_pair(index, distance);
         voisins_.push_back(voisDist);
     }
     
 
-    std::vector<std::pair<std::shared_ptr<Individu>, float>> Individu::getVoisins() const
+    std::vector<std::pair<int, float>> Individu::getVoisins() const
     {
         return voisins_;
     }
