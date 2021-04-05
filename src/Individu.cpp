@@ -3,11 +3,16 @@
 
     Individu::Individu(){};
 
-    Individu::Individu(std::string nom, int covid) : nom_(nom), covid_(covid) {}
+    Individu::Individu(int index, std::string nom, int covid) : index_(index), nom_(nom), covid_(covid) {}
 
     int Individu::getCovid() const
     {
         return covid_;
+    }
+
+    int Individu::getIndex() const
+    {
+        return index_;
     }
 
     std::string Individu::getNom() const

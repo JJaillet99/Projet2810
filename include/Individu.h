@@ -11,8 +11,9 @@ class Individu
 {
     public:
     Individu();
-    Individu(std::string nom, int covid);
+    Individu(int index, std::string nom, int covid);
     int getCovid() const;
+    int getIndex() const;
     std::string getNom() const;
     std::vector<std::pair<std::shared_ptr<Individu>, float>> getVoisins() const;
     void addVoisin(std::shared_ptr<Individu> voisin, float distance);
@@ -20,6 +21,7 @@ class Individu
     
 
     private:
+    int index_;
     std::string nom_;
     int covid_;
     std::vector<std::pair<std::shared_ptr<Individu>, float>> voisins_;

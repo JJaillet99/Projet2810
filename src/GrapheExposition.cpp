@@ -17,12 +17,15 @@ if(!grapheExiste_)
     {
         std::string nom;
         std::string covid;
+        int index = 0;
         while(std::getline(fichier1, nom, ','))
         { 
+            
             std::getline(fichier1,covid);
             int statut = std::stoi(covid);
-            Individu nouveau(nom, statut);
+            Individu nouveau(index, nom, statut);
             population_.push_back(nouveau);
+            index++;
         }
         fichier1.close();
     }
@@ -53,6 +56,7 @@ if(!grapheExiste_)
             float distance = std::stof(distanceString);
 
             population_[getIndexParNom(nomIndividu)].addVoisin(std::make_shared<Individu>(population_[getIndexParNom(nomVoisin)]),distance);
+            population_[getIndexParNom(nomVoisin)].addVoisin(std::make_shared<Individu>(population_[getIndexParNom(nomIndividu)]),distance);
 
             nomIndividuPrecedent = nomIndividu;
             
@@ -96,28 +100,58 @@ void GrapheExposition::afficherGrapheExposition()
     std::cout << std::endl;
 }
 
-bool GrapheExposition::identifierExposition(std::string x, std::string y){
-    int index_x = getIndexParNom(x);
-    int index_y = getIndexParNom(y);
-    if (population_[index_y].getCovid()!=true) {
-        return false;
-    }
-    for (size_t i = 0; i < population_[index_x].getVoisins().size(); i++)
+bool GrapheExposition::identifierExposition(std::string x, std::string y)
+{
+    std::set<std::pair<float, std::shared_ptr<Individu>>> ensemble;
+    std::map<int, float> distance;
+    for (int i = 0; i<population_.size(); i++)
     {
-        if (population_[index_x].getVoisins()[i].second < 2){
-            if (population_[index_x].getVoisins()[i].first->getNom()==y) {
+        distance[population_[i].getIndex()] = 10000;
+        if(population_[i].getNom() == x)
+        {
+            distance[population_[i].getIndex()] = 0;
+        }
+    }
+    ensemble.insert(std::make_pair(0, std::make_shared<Individu>(population_[getIndexParNom(x)])));
+    
+    
+    while(!ensemble.empty())
+    {
+        std::shared_ptr<Individu> individu = ensemble.begin()->second;
+        if(individu->getNom() == y)
+        {
+            if(individu->getCovid() == 1)
+            {
                 return true;
-
             }
-            else {
-                if (identifierExposition(population_[index_x].getVoisins()[i].first->getNom(), y)) {
-                    return true;
+            else
+            {
+                return false;
+            }
+        }
+        ensemble.erase(ensemble.begin());
+        
+
+        for(std::pair<std::shared_ptr<Individu>, float> voisin : individu->getVoisins())
+        {
+            if(voisin.second < 2)
+            {
+                if(distance[voisin.first->getIndex()] > distance[individu->getIndex()] + voisin.second)
+                {
+                    if(distance[voisin.first->getIndex()] != 10000)
+                    {
+                        ensemble.erase(ensemble.find(std::make_pair(distance[voisin.first->getIndex()], voisin.first)));
+                    }
+                    distance[voisin.first->getIndex()] = distance[individu->getIndex()] + voisin.second;
+                    ensemble.insert(std::make_pair(distance[voisin.first->getIndex()], voisin.first));
+                    
                 }
             }
         }
     }
     return false;
 }
+
 void GrapheExposition::notifierExposition(std::string individu) {
 
     int index=getIndexParNom(individu);
