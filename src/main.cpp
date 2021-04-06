@@ -1,12 +1,14 @@
 #include <iostream>
 #include "GrapheExposition.h"
-
+#include "lexique.h"
+#include<locale>
 int main()
 {
+    setlocale(LC_CTYPE, "fra");
     bool quitterPrincipal = false;
     
     while(quitterPrincipal == false)
-    {
+    { 
         bool quitter = false;
         char choixPrincipal;
         std::cout << "(a) Alerte COVID." << std::endl;
@@ -83,7 +85,9 @@ int main()
                 
 
             case 'b':
-            {
+            {   bool lexique_creer = false;
+                std::string fichier;
+                Lexique banque_mot = Lexique();
                 while(quitter == false)
                 {
                     char choix;
@@ -98,7 +102,12 @@ int main()
                     {
                         case 'd':
                         {
-                            std::cout << "Creation automate" << std::endl << std::endl;
+                            std::cout << "Entre nom du fichier du lexique"<<std::endl;
+                            std::cin >> fichier;
+                            if(banque_mot.AddWord(fichier)==true ){
+                            lexique_creer = true;
+                            }
+
                         break;
                         }
 
@@ -106,12 +115,22 @@ int main()
                         {
 
                             std::cout << "Tappe un mot" << std::endl << std::endl;;
+                            banque_mot.SaisiTexte();
                         break;
                         }
                         case 'f':
                         {
 
-                        std::cout << "Statistique" << std::endl << std::endl;;
+                            if (lexique_creer) {
+                                banque_mot.AfficherStatistique();
+                            
+                            }
+                            else {
+                                std::cout << "Pas de lexique" << std::endl;
+                            
+                            
+                            
+                            }
                             
                         break;
                         }
