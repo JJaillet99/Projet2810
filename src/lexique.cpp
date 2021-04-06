@@ -71,18 +71,20 @@ void Lexique::AfficherStatistique() {
 };
 
 void Lexique::SaisiTexte() {
+
     std:: vector<char> key_pressed;
     std::string entre;
     bool new_character=false;
     system("CLS");
     while(1){
-
+        bool possibilite = false;
         entre+=(char)_getche();
         system("CLS");
         std::cout << "Mot possible"<<std::endl<<"__________"<<std::endl;
         for (size_t i = 0; i < lexique_.size(); i++)
         {
-            if(std::get<std::string>(lexique_[i]).find(entre)!= std::string::npos){
+            if(std::get<std::string>(lexique_[i]).find(entre)== 0){
+                possibilite = true;
                 std::cout << std::get<0>(lexique_[i])<<std::endl;
                 if (entre == std::get<std::string>(lexique_[i])) {
                     std::get<1>(lexique_[i])+=1; 
@@ -105,6 +107,12 @@ void Lexique::SaisiTexte() {
             }
            
         }
+        if (!possibilite){
+            std::cout << "Aucune Possibilite" << std::endl;
+            return;
+        
+        }
+        
         std::cout << entre;
     
     }
