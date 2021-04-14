@@ -51,6 +51,10 @@ if(!grapheExiste_)
             {
                 nomVoisin.pop_back();
             }
+            if (nomVoisin.back() == ' ')
+            {
+                nomVoisin.pop_back();
+            }
             
             float distance = std::stof(distanceString);
             int indexIndividu = getIndexParNom(nomIndividu);
