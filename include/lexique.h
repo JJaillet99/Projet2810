@@ -11,11 +11,11 @@ class Lexique
 {
 public:
     Lexique();
-    bool AddWord(std::string nom_fichier);
+    bool AddWord(std::wstring nom_fichier);
     void AfficherStatistique();
     void SaisiTexte();
 
 private:
-    std::vector<std::tuple<std::string,int,bool,int>> lexique_;
+    std::vector<std::tuple<std::wstring,int,bool,int>> lexique_;
     int count_;
 };

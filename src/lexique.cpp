@@ -1,18 +1,24 @@
 #include "lexique.h"
+#include "stdio.h"
 Lexique::Lexique() { count_ = 0; };
 
 
-bool Lexique::AddWord(std::string nom_fichier ) {
-  
-        std::ifstream fichier1(nom_fichier);
-
+bool Lexique::AddWord(std::wstring nom_fichier ) {
+    std::ios::sync_with_stdio(false);
+    std::locale loc("en_US.UTF-8");
+        std::wifstream fichier1(nom_fichier);
+       
+        fichier1.imbue(loc);
         if (fichier1.is_open())
         {
-            std::string mot;
+            std::ios::sync_with_stdio(false);
+            std::locale loc("en_US.UTF-8");
+            std::wstring mot;
             int index = 0;
-            while (std::getline(fichier1, mot, ','))
+            while (std::getline(fichier1 >> std::ws , mot))
             {
-                std:: tuple<std::string, int, bool,int> nouveau_mot = make_tuple(mot, 0, false,0);
+                
+                std:: tuple<std::wstring, int, bool,int> nouveau_mot = make_tuple(mot, 0, false,0);
  
                 lexique_.push_back(nouveau_mot);
             }
@@ -29,13 +35,13 @@ bool Lexique::AddWord(std::string nom_fichier ) {
 
 void Lexique::AfficherStatistique() {
 
-    std::cout << "                        Affichage Statistique" << std::endl << std::endl;
-    std::cout << "        Mot         " << "  Frequence d utilisation  " << "     10 derniers mots entrées    " << std::endl;
-    std::cout << "____________________________________________________________________________________________" << std::endl;
+    std::wcout << "                        Affichage Statistique" << std::endl << std::endl;
+    std::wcout << "        Mot         " << "  Frequence d utilisation  " << "     10 derniers mots entrées    " << std::endl;
+    std::wcout << "____________________________________________________________________________________________" << std::endl;
         for (size_t i = 0; i < lexique_.size(); i++)
     {
-            std::cout << std::get<0>(lexique_[i]);
-            for (size_t j = 0; j < 35-std::get<std::string>(lexique_[i]).size(); j++)
+            std::wcout << std::get<0>(lexique_[i]);
+            for (size_t j = 0; j < 35-std::get<std::wstring>(lexique_[i]).size(); j++)
             {
                 std::cout << " ";
             }
@@ -72,21 +78,21 @@ void Lexique::AfficherStatistique() {
 
 void Lexique::SaisiTexte() {
 
-    std:: vector<char> key_pressed;
-    std::string entre;
+    std:: vector<wchar_t> key_pressed;
+    std:: wstring entre;
     bool new_character=false;
     system("CLS");
     while(1){
         bool possibilite = false;
-        entre+=(char)_getche();
+        entre+=(wchar_t)_getwche();
         system("CLS");
         std::cout << "Mot possible"<<std::endl<<"__________"<<std::endl;
         for (size_t i = 0; i < lexique_.size(); i++)
         {
-            if(std::get<std::string>(lexique_[i]).find(entre)== 0){
+            if(std::get<std::wstring>(lexique_[i]).find(entre)== 0){
                 possibilite = true;
-                std::cout << std::get<0>(lexique_[i])<<std::endl;
-                if (entre == std::get<std::string>(lexique_[i])) {
+                std::wcout << std::get<0>(lexique_[i])<<std::endl;
+                if (entre == std::get<std::wstring>(lexique_[i])) {
                     std::get<1>(lexique_[i])+=1; 
                     count_ += 1;
                     std::get<3>(lexique_[i]) = count_;
@@ -113,7 +119,7 @@ void Lexique::SaisiTexte() {
         
         }
         
-        std::cout << entre;
+        std::wcout << entre;
     
     }
 }
