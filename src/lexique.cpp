@@ -3,7 +3,7 @@
 Lexique::Lexique() { count_ = 0; };
 
 
-bool Lexique::AddWord(std::wstring nom_fichier ) {
+bool Lexique::genererLangage(std::wstring nom_fichier ) {
     std::ios::sync_with_stdio(false);
     std::locale loc("en_US.UTF-8");
         std::wifstream fichier1(nom_fichier);
@@ -82,11 +82,21 @@ void Lexique::SaisiTexte() {
     std:: vector<wchar_t> key_pressed;
     std:: wstring etat;
     std:: wstring enter;
+    bool soumission = false;
     bool new_character=false;
     system("CLS");
     while(1){
         bool possibilite = false;
-        etat+=(wchar_t)_getwche();
+        wchar_t input = (wchar_t)_getwche();
+        if(input == L'\r')
+        {
+            soumission = true;
+        }
+        else 
+        {
+            etat += input;
+        }
+        
         system("CLS");
 
         std::cout << "Mot possible"<<std::endl<<"__________"<<std::endl;
@@ -95,7 +105,7 @@ void Lexique::SaisiTexte() {
             if(std::get<std::wstring>(lexique_[i]).find(etat) == 0){
                 possibilite = true;
                 std::wcout << std::get<0>(lexique_[i])<<std::endl;
-                if (etat == std::get<std::wstring>(lexique_[i])) {
+                if (etat == std::get<std::wstring>(lexique_[i]) && soumission) {
                     std::get<1>(lexique_[i])+=1; 
                     count_ += 1;
                     std::get<3>(lexique_[i]) = count_;
@@ -117,7 +127,7 @@ void Lexique::SaisiTexte() {
            
         }
         if (!possibilite){
-            std::cout << "Aucune Possibilite" << std::endl;
+            std::wcout << "Aucune Possibilité" << std::endl;
             return;
         
         }

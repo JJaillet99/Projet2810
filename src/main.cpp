@@ -1,13 +1,12 @@
 #include <iostream>
 #include "GrapheExposition.h"
 #include "lexique.h"
+
 #include <locale>
 
 int main()
 {
-    
     setlocale(LC_ALL, "fra");
-   
     bool quitterPrincipal = false;
 
     
@@ -51,9 +50,9 @@ int main()
                             }
                             else
                             {
-                                std::locale::global(std::locale(""));
-                                fprintf(stdout, "Le graphe n a pas encore été genere");
-                                std::cout << u8"Le graphe n a pas encore été genere" << std::endl << std::endl;;
+                                
+                         
+                                std::wcout << "Le graphe n a pas encore ete genere" << std::endl << std::endl;;
                             }
                         break;
                         }
@@ -97,7 +96,7 @@ int main()
                 while(quitter == false)
                 {
                     char choix;
-                    std::cout << "(d) Créer automate." << std::endl;
+                    std::wcout << "(d) Creer automate." << std::endl;
                     std::cout << "(e) Saisir mot." << std::endl;
                     std::cout << "(f) Afficher statistiques." << std::endl;
                     std::cout << "(g) Quitter" << std::endl;
@@ -110,7 +109,7 @@ int main()
                         {
                             std::cout << "Entre nom du fichier du lexique"<<std::endl;
                             std::wcin >> fichier;
-                            if(banque_mot.AddWord(fichier)==true ){
+                            if(banque_mot.genererLangage(fichier)==true ){
                             lexique_creer = true;
                             }
 

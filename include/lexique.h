@@ -11,7 +11,7 @@ class Lexique
 {
 public:
     Lexique();
-    bool AddWord(std::wstring nom_fichier);
+    bool genererLangage(std::wstring nom_fichier);
     void AfficherStatistique();
     void SaisiTexte();
 
