@@ -15,6 +15,7 @@ bool Lexique::AddWord(std::wstring nom_fichier ) {
             std::locale loc("en_US.UTF-8");
             std::wstring mot;
             int index = 0;
+            // creation du langage accepté par l'automate
             while (std::getline(fichier1 >> std::ws , mot))
             {
                 
@@ -79,20 +80,22 @@ void Lexique::AfficherStatistique() {
 void Lexique::SaisiTexte() {
 
     std:: vector<wchar_t> key_pressed;
-    std:: wstring entre;
+    std:: wstring etat;
+    std:: wstring enter;
     bool new_character=false;
     system("CLS");
     while(1){
         bool possibilite = false;
-        entre+=(wchar_t)_getwche();
+        etat+=(wchar_t)_getwche();
         system("CLS");
+
         std::cout << "Mot possible"<<std::endl<<"__________"<<std::endl;
         for (size_t i = 0; i < lexique_.size(); i++)
         {
-            if(std::get<std::wstring>(lexique_[i]).find(entre)== 0){
+            if(std::get<std::wstring>(lexique_[i]).find(etat) == 0){
                 possibilite = true;
                 std::wcout << std::get<0>(lexique_[i])<<std::endl;
-                if (entre == std::get<std::wstring>(lexique_[i])) {
+                if (etat == std::get<std::wstring>(lexique_[i])) {
                     std::get<1>(lexique_[i])+=1; 
                     count_ += 1;
                     std::get<3>(lexique_[i]) = count_;
@@ -119,7 +122,7 @@ void Lexique::SaisiTexte() {
         
         }
         
-        std::wcout << entre;
+        std::wcout << etat;
     
     }
 }
