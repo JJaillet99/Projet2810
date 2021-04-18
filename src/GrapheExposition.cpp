@@ -47,11 +47,7 @@ if(!grapheExiste_)
             {
                 nomVoisin.pop_back();
             }
-            if(nomVoisin.back() == ' ')
-            {
-                nomVoisin.pop_back();
-            }
-            if (nomVoisin.back() == ' ')
+            while(nomVoisin.back() == ' ')
             {
                 nomVoisin.pop_back();
             }
