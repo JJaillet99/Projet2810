@@ -7,11 +7,11 @@
 #include <fstream>
 #include <tuple>
 #include <conio.h>
-class Lexique
+class Automate
 {
 public:
-    Lexique();
-    bool genererLangage(std::wstring nom_fichier);
+    Automate();
+    bool GenererLangage(std::wstring nom_fichier);
     void AfficherStatistique();
     void SaisiTexte();
 

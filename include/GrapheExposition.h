@@ -6,24 +6,24 @@
 #include <set>
 #include <map>
 #include <utility>
-#include "Individu.h"
+#include "individu.h"
 
 
 class GrapheExposition
 {
+
+
     public:
-
-    GrapheExposition();
-
-    void creerGrapheExposition(std::string individu, std::string contact);
-    void afficherGrapheExposition();
-    bool identifierExposition(std::string x, std::string y);
-    void notifierExposition(std::string individu);
-    bool getExist() const;
+         GrapheExposition();
+    void CreerGrapheExposition(std::string individu, std::string contact);
+    void AfficherGrapheExposition();
+    bool IdentifierExposition(std::string x, std::string y);
+    void NotifierExposition(std::string individu);
+    bool GetExist() const;
     private:
-    size_t getIndexParNom(std::string nom);
+    size_t GetIndexParNom(std::string nom);
     std::vector<Individu> population_;
-    bool grapheExiste_ = false;
+    bool graphe_existe_ = false;
 
     
 };

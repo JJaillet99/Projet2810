@@ -1,9 +1,9 @@
-#include "lexique.h"
+#include "automate.h"
 #include "stdio.h"
-Lexique::Lexique() { count_ = 0; };
+Automate::Automate() { count_ = 0; };
 
 
-bool Lexique::genererLangage(std::wstring nom_fichier ) {
+bool Automate::GenererLangage(std::wstring nom_fichier ) {
     std::ios::sync_with_stdio(false);
     std::locale loc("en_US.UTF-8");
         std::wifstream fichier1(nom_fichier);
@@ -34,7 +34,7 @@ bool Lexique::genererLangage(std::wstring nom_fichier ) {
 
 };
 
-void Lexique::AfficherStatistique() {
+void Automate::AfficherStatistique() {
 
     std::wcout << "                        Affichage Statistique" << std::endl << std::endl;
     std::wcout << "        Mot         " << "  Frequence d utilisation  " << "     10 derniers mots entrées    " << std::endl;
@@ -77,7 +77,7 @@ void Lexique::AfficherStatistique() {
 
 };
 
-void Lexique::SaisiTexte() {
+void Automate::SaisiTexte() {
 
     std:: vector<wchar_t> key_pressed;
     std:: wstring etat;

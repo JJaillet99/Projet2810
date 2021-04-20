@@ -1,9 +1,8 @@
 #include <iostream>
-#include "GrapheExposition.h"
-#include "lexique.h"
-
+#include "grapheExposition.h"
+#include "automate.h"
 #include <locale>
-
+#include <Windows.h>
 int main()
 {
     setlocale(LC_ALL, "fra");
@@ -11,42 +10,48 @@ int main()
 
     
     while(quitterPrincipal == false)
-    { 
+    {
         bool quitter = false;
         char choixPrincipal;
+        system("CLS");
         std::cout << "(a) Alerte COVID." << std::endl;
         std::cout << "(b) Jeu Instructif." << std::endl;
         std::cout << "(c) Quitter." << std::endl;
         std::cin >> choixPrincipal;
+        system("CLS");
         std::cout << std::endl;
         switch(choixPrincipal)
         {
+
+           
             case 'a':
             {
-                GrapheExposition graphe;
+                GrapheExposition graphe= GrapheExposition ();
                 while(quitter == false)
                 {
+                  
                     char choix;
                     std::cout << "(a) Creer le graphe d exposition." << std::endl;
                     std::cout << "(b) Afficher le graphe d exposition." << std::endl;
                     std::cout << "(c) Afficher notification COVID" << std::endl;
                     std::cout << "(d) Quitter." << std::endl;
                     std::cin >> choix;
+                    system("CLS");
                     std::cout << std::endl;
                     switch(choix)
                     {
                         case 'a':
-                        {
-                            graphe.creerGrapheExposition("Individus.txt", "Contacts.txt");
+                        {   
+                            graphe.CreerGrapheExposition("Individus.txt", "Contacts.txt");
                             std::cout << std::endl << std::endl;
                         break;
                         }
 
                         case 'b':
                         {
-                            if(graphe.getExist())
+                            if(graphe.GetExist())
                             {
-                                graphe.afficherGrapheExposition();
+                                graphe.AfficherGrapheExposition();
                             }
                             else
                             {
@@ -58,12 +63,12 @@ int main()
                         }
                         case 'c':
                         {
-                            if (graphe.getExist())
+                            if (graphe.GetExist())
                             {
                                 std::string personne;
                                 std::cout << "Entrer le nom de la personne que vous souhaiter verifier son exposition a la covid" << std::endl << std::endl;
                                 std::cin >> personne;
-                                graphe.notifierExposition(personne);
+                                graphe.NotifierExposition(personne);
                             }
                             else
                             {
@@ -92,15 +97,17 @@ int main()
             case 'b':
             {   bool lexique_creer = false;
                 std::wstring fichier;
-                Lexique banque_mot = Lexique();
+                Automate banque_mot = Automate();
                 while(quitter == false)
                 {
+                   
                     char choix;
                     std::wcout << "(d) Creer automate." << std::endl;
                     std::cout << "(e) Saisir mot." << std::endl;
                     std::cout << "(f) Afficher statistiques." << std::endl;
                     std::cout << "(g) Quitter" << std::endl;
                     std::cin >> choix;
+                    system("CLS");
                     std::cout << std::endl;
 
                     switch(choix)
@@ -109,7 +116,7 @@ int main()
                         {
                             std::cout << "Entre nom du fichier du lexique"<<std::endl;
                             std::wcin >> fichier;
-                            if(banque_mot.genererLangage(fichier)==true ){
+                            if(banque_mot.GenererLangage(fichier)==true ){
                             lexique_creer = true;
                             }
 
@@ -118,9 +125,19 @@ int main()
 
                         case 'e':
                         {
+                            if (lexique_creer) {
+                                std::cout << "Tappe un mot" << std::endl << std::endl;
+                                Sleep(1000);
+                                banque_mot.SaisiTexte();
 
-                            std::cout << "Tappe un mot" << std::endl << std::endl;;
-                            banque_mot.SaisiTexte();
+                            }
+                            else {
+                                std::cout << "Pas de lexique" << std::endl;
+
+
+
+                            }
+                           
                         break;
                         }
                         case 'f':
