@@ -16,6 +16,6 @@ public:
     void SaisiTexte();
 
 private:
-    std::vector<std::tuple<std::wstring,int,bool,int>> lexique_;
-    int count_;
+    std::vector<std::tuple<std::wstring,int,bool,int>> lexique_; //wstring est le mot, int le nombre d'entré de celui-ci, bool si il est présent dans les 10 derniers, et int sont numéro d'entré pour calculé si il est dans les 10 derniers
+    int count_; // compte le nombre d'entrée 
 };
