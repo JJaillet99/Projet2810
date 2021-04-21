@@ -114,11 +114,11 @@ void Automate::SaisiTexte() {
                     std::get<3>(lexique_[i]) = count_;//numéro d'entré du mot 
                     for (size_t j = 0; j < lexique_.size(); j++)  // met le flag a false pour la 11e mot rentré s'il y a u plus de 10 mots 
                     {
-                        if (std::get<3>(lexique_[i]) != 0 && std::get<3>(lexique_[i]) >= count_ - 10 && std::get<3>(lexique_[i]) <= count_) {
-                            std::get<2>(lexique_[i]) = true;
+                        if (std::get<3>(lexique_[j]) != 0 && std::get<3>(lexique_[j]) > count_ - 10 && std::get<3>(lexique_[j]) <= count_) {
+                            std::get<2>(lexique_[j]) = true;
                         }
                         else {
-                            std::get<2>(lexique_[i]) = false;
+                            std::get<2>(lexique_[j]) = false;
 
                         }
                     }
